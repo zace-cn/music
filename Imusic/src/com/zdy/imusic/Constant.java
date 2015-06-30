@@ -3,6 +3,10 @@ package com.zdy.imusic;
 public class Constant {
 
 	public static final String MUSIC_PROGRESS = "MUSIC_PROGRESS";
+	public static final String NOTIFY_PAUSE = "NOTIFY_PAUSE";
+	public static final String NOTIFY_PLAY = "NOTIFY_PLAY";
+	public static final String NOTIFY_NEXT = "NOTIFY_NEXT";
+	public static final String NOTIFY_OFF = "NOTIFY_OFF";
 	public static final String MUSIC_INFO_CALLBACK = "MUSIC_INFO_CALLBACK";
 	public static final String STOP_LISTENER = "STOP_LISTENER";
 	public static final String MAX_PROGRESS = "MAX_PROGRESS";

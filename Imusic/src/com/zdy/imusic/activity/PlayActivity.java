@@ -74,7 +74,7 @@ public class PlayActivity extends BaseActivity<PlayLayoutImpl> implements OnCtrl
 		super.onNewIntent(intent);
 		
 		isContinue =intent.getBooleanExtra("isContinue", false);
-		if(isContinue){
+		if(isContinue){ 
 			fitView.ViewToCenter(true);
 			myBinder.playGo();
 		}
@@ -90,6 +90,10 @@ public class PlayActivity extends BaseActivity<PlayLayoutImpl> implements OnCtrl
 		filter.addAction(Constant.MUSIC_PROGRESS);
 		filter.addAction(Constant.MUSIC_INFO_CALLBACK);
 		filter.addAction(Constant.MAX_PROGRESS);
+		filter.addAction(Constant.NOTIFY_PLAY);
+		filter.addAction(Constant.NOTIFY_NEXT);
+		filter.addAction(Constant.NOTIFY_OFF);
+		filter.addAction(Constant.NOTIFY_PAUSE);
 		registerReceiver(recieve, filter);
 		super.onStart();
 	}
@@ -135,6 +139,20 @@ public class PlayActivity extends BaseActivity<PlayLayoutImpl> implements OnCtrl
 		public void onReceive(Context context, Intent intent) {
 
 			switch (intent.getAction()) {
+			
+			case Constant.NOTIFY_PAUSE:
+				myBinder.pause();
+				break;
+			case Constant.NOTIFY_PLAY:
+				myBinder.playGo();
+				break;
+			
+			case Constant.NOTIFY_NEXT:
+				myBinder.next();
+				break;
+			
+			case Constant.NOTIFY_OFF:
+				break;
 			case Constant.MUSIC_PROGRESS:
 				if (intent.getBooleanExtra("ok", false)) {
 					fitView.resetProgress();

@@ -533,7 +533,7 @@ public class PlayLayoutImpl implements ViewInflate {
 	class RootOnTouch implements OnTouchListener {
 
 		Context context;
-
+		boolean isTop;
 		public RootOnTouch(Context context) {
 			this.context = context;
 		}
@@ -543,29 +543,39 @@ public class PlayLayoutImpl implements ViewInflate {
 			int action = event.getAction();
 			switch (action) {
 			case MotionEvent.ACTION_DOWN:
-				float curX = imageView.getX();
-				AnimUtil.ofFloat(imageView, "X", curX, 0 - screenWidth / 3,
-						new AnimatorListenerAdapter() {
-							@Override
-							public void onAnimationEnd(Animator animation) {
-								ctrlMediaListener.pause();
-								play.setVisibility(View.VISIBLE);
-								pause.setVisibility(View.GONE);
+				float touchY = event.getRawY();
+				if (touchY < screenHeight / 10) {
+					isTop = true;
+					break;
+				} else {
+					float curX = imageView.getX();
+					AnimUtil.ofFloat(imageView, "X", curX, 0 - screenWidth / 3,
+							new AnimatorListenerAdapter() {
+								@Override
+								public void onAnimationEnd(Animator animation) {
+									ctrlMediaListener.pause();
+									play.setVisibility(View.VISIBLE);
+									pause.setVisibility(View.GONE);
 
-								Intent intent = new Intent(context,
-										ListenActivity.class);
-								intent.putExtra("isFromPlay", true);
-								context.startActivity(intent);
-							}
-						});
+									Intent intent = new Intent(context,
+											ListenActivity.class);
+									intent.putExtra("isFromPlay", true);
+									context.startActivity(intent);
+								}
+							});
+				}
 
 				break;
 
 			case MotionEvent.ACTION_MOVE:
 				break;
 			case MotionEvent.ACTION_UP:
-				Intent intent2 = new Intent(Constant.STOP_LISTENER);
-				context.sendBroadcast(intent2);
+				if(isTop){
+					isTop = false;
+				}else{
+					Intent intent2 = new Intent(Constant.STOP_LISTENER);
+					context.sendBroadcast(intent2);
+				}
 				break;
 			}
 

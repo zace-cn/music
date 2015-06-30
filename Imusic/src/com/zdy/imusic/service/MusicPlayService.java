@@ -6,10 +6,14 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 import com.zdy.imusic.Constant;
+import com.zdy.imusic.R;
 import com.zdy.imusic.api.BaiduMusicAPI;
 import com.zdy.imusic.entity.Song;
 import com.zdy.imusic.entity.Music.MusicInfo;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.media.AudioManager;
@@ -21,6 +25,9 @@ import android.os.Binder;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationCompat.Builder;
+import android.widget.RemoteViews;
 import android.widget.Toast;
 
 public class MusicPlayService extends Service implements OnPreparedListener,
@@ -99,6 +106,7 @@ public class MusicPlayService extends Service implements OnPreparedListener,
 		if (!mediaPlayer.isPlaying()) {
 			handler.sendEmptyMessage(1);
 			mediaPlayer.start();
+			showNotification();
 		}
 	}
 
@@ -107,6 +115,7 @@ public class MusicPlayService extends Service implements OnPreparedListener,
 		if (mediaPlayer != null && mediaPlayer.isPlaying()) {
 			handler.removeMessages(1);
 			mediaPlayer.pause();
+			showNotification();
 		}
 	}
 
@@ -160,13 +169,64 @@ public class MusicPlayService extends Service implements OnPreparedListener,
 		}.start();
 
 		mediaPlayer.start();
-
+		
+		showNotification();
 		Intent intent = new Intent(Constant.MAX_PROGRESS);
 		intent.putExtra("max", mediaPlayer.getDuration());
 		intent.putExtra("currentPos", mediaPlayer.getCurrentPosition());
 		sendBroadcast(intent);
 		handler.sendEmptyMessage(1);
 	}
+
+	/**
+	 * 创建通知
+	 */
+	private void showNotification() {
+			
+		NotificationCompat.Builder builder =  new Builder(this);
+		
+		RemoteViews remoteViews = new RemoteViews(getPackageName(), R.layout.notification);
+		
+		remoteViews.setImageViewResource(R.id.notify_icon, R.drawable.notification_icon);
+		
+		if(mediaPlayer.isPlaying()){
+			remoteViews.setImageViewResource(R.id.notify_pause, R.drawable.apollo_holo_dark_pause);
+			Intent pauseIntent = new Intent(Constant.NOTIFY_PAUSE);
+			PendingIntent pausePendingIntent = PendingIntent.getBroadcast(this, 1, pauseIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+			remoteViews.setOnClickPendingIntent(R.id.notify_pause, pausePendingIntent);
+		}else{
+			remoteViews.setImageViewResource(R.id.notify_pause, R.drawable.apollo_holo_dark_play);
+			Intent playIntent = new Intent(Constant.NOTIFY_PLAY);
+			PendingIntent playPendingIntent = PendingIntent.getBroadcast(this, 1, playIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+			remoteViews.setOnClickPendingIntent(R.id.notify_pause, playPendingIntent);
+		}
+		
+		remoteViews.setImageViewResource(R.id.notify_off, R.drawable.apollo_holo_dark_notifiation_bar_collapse);
+		remoteViews.setImageViewResource(R.id.notify_next, R.drawable.apollo_holo_dark_next);
+		remoteViews.setTextViewText(R.id.notify_songname, song.getSonginfo().getTitle());
+		remoteViews.setTextViewText(R.id.notify_singername, song.getSonginfo().getAuthor());
+		
+
+		
+		Intent nextIntent = new Intent(Constant.NOTIFY_NEXT);
+		PendingIntent nextPendingIntent = PendingIntent.getBroadcast(this, 2, nextIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+		remoteViews.setOnClickPendingIntent(R.id.notify_next, nextPendingIntent);
+		
+		
+		
+		builder.setContent(remoteViews)
+				.setTicker("正在播放")
+				.setWhen(System.currentTimeMillis())
+				.setPriority(Notification.PRIORITY_DEFAULT)
+				.setOngoing(true)
+				.setDefaults(Notification.DEFAULT_VIBRATE)
+				.setSmallIcon(R.drawable.notification_icon);
+				
+		Notification notification = builder.build();
+		notification.flags = Notification.FLAG_ONGOING_EVENT;  
+		startForeground(1, notification);
+				
+	}	
 
 	// 暂停
 	public void next() {
