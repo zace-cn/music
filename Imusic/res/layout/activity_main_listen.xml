@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zdy.imusic.view.ListenLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/listen_layout"
+    android:background="#EBE8E1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <com.zdy.imusic.view.MyTextView
+        android:id="@+id/tv_main_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dip"
+        android:gravity="center"
+        android:textColor="#000000"
+        android:textScaleX="1.2"
+        android:textSize="20sp" />
+
+    <com.zdy.imusic.view.LoadingView
+        android:id="@+id/loading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
+    <com.zdy.imusic.view.MyTextView
+        android:id="@+id/tv_main_tip1"
+        android:layout_alignParentBottom="true"
+        android:text="按住	任意位置	说话"
+        android:layout_marginBottom="60dip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textScaleX="1.1"
+        android:textColor="#99000000"
+        android:textSize="20sp" />
+    <com.zdy.imusic.view.MyTextView
+        android:textScaleX="1.1"
+        android:id="@+id/tv_main_tip2"
+        android:layout_alignParentBottom="true"
+        android:text="可以说：	歌手名"
+        android:layout_marginBottom="40dip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="#40000000"
+        android:textSize="14sp" />
+
+</com.zdy.imusic.view.ListenLayout>

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/fl_layout_root_play"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipChildren="false" >
+
+    <FrameLayout
+        android:id="@+id/play_bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipChildren="false" >
+
+        <ImageView
+            android:id="@+id/play_img_bg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop" />
+    </FrameLayout>
+
+    <com.zdy.imusic.view.BlurringView
+        android:id="@+id/play_blur"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        app:blurRadius="11"
+        app:downsampleFactor="12"
+        app:overlayColor="#90000000" />
+
+    <com.zdy.imusic.view.CircleImageView
+        android:id="@+id/play_circleview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <com.zdy.imusic.view.LyricView
+        android:id="@+id/lyricView "
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/img_play_play"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:src="@drawable/tip_play"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/img_play_pause"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:src="@drawable/tip_pause"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/img_play_share"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/tip_share"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/img_play_next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/tip_next"
+        android:visibility="gone" />
+
+    <com.zdy.imusic.view.MyTextView
+        android:id="@+id/tv_play_songname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="80dip"
+        android:gravity="center"
+        android:textColor="#fff"
+        android:textScaleX="1.1"
+        android:textSize="17sp" />
+
+    <com.zdy.imusic.view.MyTextView
+        android:id="@+id/tv_play_singername"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="60dip"
+        android:gravity="center"
+        android:textColor="#fff"
+        android:textSize="13sp" />
+
+    <com.zdy.imusic.view.MyTextView
+        android:id="@+id/lyc_tv_play_songname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:layout_marginTop="60dip"
+        android:gravity="center"
+        android:textColor="#fff"
+        android:textSize="20sp"
+        android:visibility="gone" />
+
+    <com.zdy.imusic.view.MyTextView
+        android:id="@+id/lyc_tv_play_singername"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:layout_marginTop="85dip"
+        android:gravity="center"
+        android:textColor="#fff"
+        android:textSize="16sp"
+        android:visibility="gone" />
+
+    <com.zdy.imusic.view.CircleImageView
+        android:id="@+id/next_circleview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</FrameLayout>
